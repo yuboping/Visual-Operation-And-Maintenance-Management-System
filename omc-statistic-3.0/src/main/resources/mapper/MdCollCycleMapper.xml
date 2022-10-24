@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.asiainfo.ais.omcstatistic.mapper.MdCollCycleMapper" >
+  <resultMap id="BaseResultMap" type="com.asiainfo.ais.omcstatistic.pojo.MdCollCycle" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="CYCLEID" property="cycleid" jdbcType="INTEGER" />
+    <result column="CYCLENAME" property="cyclename" jdbcType="VARCHAR" />
+    <result column="CYCLE" property="cycle" jdbcType="INTEGER" />
+    <result column="CRON" property="cron" jdbcType="VARCHAR" />
+    <result column="RUNDAY" property="runday" jdbcType="INTEGER" />
+    <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+  </resultMap>
+</mapper>

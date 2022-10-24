@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+    <property name="LOG_HOME" value="logs" />
+    <property name="LOG_NAME" value="${LOG_HOME}/main.log%d{yyMMdd}" />
+    <property name="PATTERN" value="%d{HH:mm:ss} %p %logger %L - %m%n" />
+
+    <appender name="F1"
+        class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <charset>UTF-8</charset>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${LOG_NAME}</FileNamePattern>
+            <MaxHistory>90</MaxHistory>
+        </rollingPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>${PATTERN}</pattern>
+        </layout>
+    </appender>
+
+    <appender name="C" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <charset>UTF-8</charset>
+        </encoder>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>${PATTERN}</pattern>
+        </layout>
+    </appender>
+    <logger name="oracle.jdbc.driver" level="error" additivity="true" />
+    <logger name="org.apache.commons.beanutils" level="error" additivity="true" />
+    <logger name="druid.sql" level="info" additivity="true" />
+    <category name="java.sql">
+        <priority value="info" />
+    </category>
+    <root level="info">
+        <appender-ref ref="F1" />
+    </root>
+</configuration>

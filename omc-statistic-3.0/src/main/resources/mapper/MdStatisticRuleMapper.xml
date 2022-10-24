@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.asiainfo.ais.omcstatistic.mapper.MdStatisticRuleMapper">
+  <resultMap id="BaseResultMap" type="com.asiainfo.ais.omcstatistic.pojo.MdStatisticRule">
+    <id column="RULE_ID" jdbcType="VARCHAR" property="ruleId" />
+    <result column="RULE_NAME" jdbcType="VARCHAR" property="ruleName" />
+    <result column="RULE_INTERVAL" jdbcType="VARCHAR" property="ruleInterval" />
+    <result column="RET_TABLE" jdbcType="VARCHAR" property="retTable" />
+    <result column="EXPRESSION" jdbcType="VARCHAR" property="expression" />
+    <result column="RULE_TYPE" jdbcType="VARCHAR" property="ruleType" />
+    <result column="METRIC_ID" jdbcType="VARCHAR" property="metricId" />
+    <result column="ATTR1" jdbcType="VARCHAR" property="attr1" />
+    <result column="ATTR2" jdbcType="VARCHAR" property="attr2" />
+    <result column="ATTR3" jdbcType="VARCHAR" property="attr3" />
+    <result column="ATTR4" jdbcType="VARCHAR" property="attr4" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="DESCRIPTION" jdbcType="VARCHAR" property="description" />
+    <result column="OFFSET" jdbcType="VARCHAR" property="offset" />
+  </resultMap>
+</mapper>

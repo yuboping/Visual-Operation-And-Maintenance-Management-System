@@ -1,0 +1,134 @@
+import org.apache.tools.ant.filters.FixCrLfFilter;
+import org.apache.tools.ant.filters.ReplaceTokens;
+
+apply from: 'versioning.gradle'
+
+tasks.withType(JavaCompile) { 
+    sourceCompatibility = "1.8"
+    targetCompatibility = "1.8"
+    options.encoding="UTF-8"
+}
+
+javadoc { options.encoding = "UTF-8" }
+
+sourceSets.main{
+    java {
+        srcDirs += ['src/main/sh']
+    }
+}
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': description 
+        attributes "Implementation-Version": version
+        attributes "Main-Class" : "com.asiainfo.lcims.omc.alarm.business.MainService"
+    }
+}
+
+configurations.all {
+    resolutionStrategy {
+        eachDependency { details ->
+            if (details.requested.name == 'log4j') {
+                details.useTarget "org.slf4j:log4j-over-slf4j:1.7.5"
+            }
+            if (details.requested.name == 'commons-logging') {
+                details.useTarget "org.slf4j:jcl-over-slf4j:1.7.5"
+            }
+        }
+    }
+}
+
+dependencies {
+    compile(
+        [group: 'com.asiainfo.lcims', name: 'lcbmi.config', version:'1.1.13'],
+        [group: 'com.asiainfo.lcims', name: 'lcbmi.utils', version:'10.8.3'],
+        [group: 'com.alibaba', name: 'druid', version:"${druid_version}"],
+        [group: 'org.quartz-scheduler',name:'quartz',version:'2.2.2'],
+        [group: 'io.netty', name: 'netty-all', version:'4.0.21.Final'],
+        [group: 'com.alibaba', name: 'fastjson', version: '1.2.69'],
+        [group: 'commons-lang',name:'commons-lang',version:'2.6'],
+        [group: 'com.oracle', name: 'ojdbc14', version:'10.2.0.4.0'],
+        [group: 'mysql', name:'mysql-connector-java', version:'8.0.11']
+    )
+    
+    runtime(
+        [group: 'ch.qos.logback', name: 'logback-classic', version:'1.0.11']
+    )
+    
+}
+
+task libs(type: Copy) {
+    from configurations.runtime
+    into "$buildDir/libs"
+}
+
+processResources(){
+    filter(ReplaceTokens,tokens: loadEnv());
+    filter ReplaceTokens, tokens: [
+        "version": version
+    ]
+    
+    filter(FixCrLfFilter,
+        eol: FixCrLfFilter.CrLf.newInstance('lf'),
+        tab: FixCrLfFilter.AddAsisRemove.newInstance('asis'),
+        tablength: 4,
+        eof: FixCrLfFilter.AddAsisRemove.newInstance('remove'),
+        fixlast: true)
+}
+
+task processShell(type: Copy) {
+    description = " copy shell scripts to buildDir/shell"
+    from 'src/main/sh'
+    into "$buildDir/sh"
+    filter(ReplaceTokens,tokens: loadEnv());
+    filter(FixCrLfFilter,
+        eol: FixCrLfFilter.CrLf.newInstance('lf'),
+        tab: FixCrLfFilter.AddAsisRemove.newInstance('asis'),
+        tablength: 4,
+        eof: FixCrLfFilter.AddAsisRemove.newInstance('remove'),
+        fixlast: true)
+}
+
+processResources.dependsOn(processShell)
+build.dependsOn(libs)
+
+task deploy(type: Copy) {
+    description = ' deploy all the binary and config files to destination(prefix) '
+    def destFold=file("$prefix")
+    into(destFold)
+    from("$buildDir/libs"){
+        into("libs")
+    }
+    from("$buildDir/sh"){
+        into("sh")
+    }
+    doFirst{
+        logger.lifecycle("deploy files to : $destFold")
+    }
+    doLast{
+        logger.lifecycle("deploy success!")
+    }
+}
+
+task preDeploy() << {
+    description = ' pre actions for task deploy'
+    def logsdir=file("$prefix/logs")
+    if(!logsdir.exists()){
+        logger.lifecycle("create logsdir  : $logsdir")
+        logsdir.mkdirs();
+    }else{
+        logger.lifecycle("$logsdir  exists!")
+    }
+    def libs=fileTree("$prefix/libs")
+    libs.each {jar ->
+        jar.delete()
+    }
+}
+
+deploy.dependsOn build
+deploy.dependsOn preDeploy
+
+task runServer(type: JavaExec) {
+    main = 'com.asiainfo.lcims.omc.alarm.business.MainService'
+    classpath = sourceSets.main.runtimeClasspath
+}
