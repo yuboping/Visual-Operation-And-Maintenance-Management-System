@@ -1,0 +1,201 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<!--
+/**
+ *
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+-->
+<configuration>
+
+
+  <property>
+    <name>hbase.cluster.distributed</name>
+    <value>true</value>
+  </property>
+    <property>
+    <name>dfs.replication</name>
+    <value>2</value>
+  </property>
+  
+
+  <!-- zookeeper -->
+  <property>
+    <name>hbase.zookeeper.quorum</name>
+    <value>@hbase.zookeeperQuorum@</value>
+  </property>
+  <!-- zookeeper end -->
+  
+  
+
+  <property>
+    <name>hbase.master.maxclockskew</name>
+    <value>180000</value>
+    <description>时间不同步容忍度默认3分钟</description>
+  </property>
+  <property>
+    <name>zookeeper.session.timeout</name>
+    <value>180000</value>
+    <description>超过这个时间ZK认为这个RS挂掉了内存大的话可以适当扩大 默认3分钟</description>
+  </property>
+  
+  
+  
+  <!--优化参数-->
+  <property>
+    <name>hbase.regionserver.handler.count</name>
+    <value>60</value>
+    <description>RegionServers和Master 设置的处理监听实例线程个数我们是scan不要设置大默认是10</description>    
+  </property>
+
+  <property>
+    <name>hbase.hregion.max.filesize</name>
+    <value>107374182400</value>
+     <description>控制region分裂的一个region最大值设置为100g不自动分裂 会降低IO需要手工分裂</description>    
+  </property>
+  <property>  
+    <name>hbase.regionserver.region.split.policy</name>  
+    <value>org.apache.hadoop.hbase.regionserver.ConstantSizeRegionSplitPolicy</value>  
+    <description>这个需要和hbase.hregion.max.filesize结合使用 固定大小分离基本上此设置不需要分裂 好像DisabledRegionSplitPolicy更好不过现在不确定支持不</description>  
+</property>  
+  <property>
+    <name>hbase.hregion.majorcompaction</name>
+    <value>0</value>
+    <description>禁止做majorcompaction major_compact 单引号hbasetest单引号 删除数据必须做</description>    
+  </property>  
+  
+
+  <property>
+    <name>hbase.hstore.blockingStoreFiles</name>
+    <value>2100000000</value>
+    <description>多少个storefiles 则block写入操作默认是30个
+    大量持续写入会造成compact无法完成导致region过大最后不可用等待split和compact</description>   
+  </property>
+    <property>
+    <name>hbase.hstore.blockingWaitTime</name>
+    <value>30000</value>
+    <description>阻塞多长时间30s</description>   
+  </property>
+  
+	 <!-- memstore 刷新情况：
+	      		1、单memstore> 配置尺寸 所有属于同一个region的memstore都需要刷新
+        2、rs的总的memstore>upperlimmit 按照从大到小刷新 block 整个rs
+        3、单region的memstore> 配置尺寸*multiplier 我们基本不存在这种情况 
+        4、WAL日志数量>hbase.regionserver.max.logs 刷新从旧到新，刷新后删除WAL日志直到降到一下
+        5、 WAL尺寸> hbase.regionserver.maxlogs*  hbase.regionserver.hlog.blocksize(默认2G)刷新日志
+       -->
+    <property>
+    <name>hbase.hregion.memstore.flush.size</name>
+    <value>134217728</value>
+    <description>memstore刷新的尺寸此值最好和block一样目前设置为128M刷新</description>    
+  </property>
+    <property>
+    <name>hbase.hregion.memstore.block.multiplier</name>
+    <value>5</value>
+    <description>当单个region 的memstore size达到hbase.hregion.memstore.flush.size*hbase.hregion.memstore.block.multiplier
+    时， 本region的update会被block</description>
+  </property>
+
+  <property>
+    <name>hbase.regionserver.global.memstore.size</name>
+    <value>0.38</value>
+    <description>memstore上限比例 达到这个比例会刷新memstore直到达到下面的值读业务这个值设置小 rs所有的update会被block</description>    
+  </property>
+  <property>
+    <name>hbase.regionserver.global.memstore.lowerLimit</name>
+    <value>0.3</value>
+    <description>memstore下限比例</description>    
+  </property>
+  <property>
+    <name>hfile.block.cache.size</name>
+    <value>0.40</value>
+    <description>读缓存比例+memstore.upperLimit 小于0.8 </description>  
+  </property>
+  
+  <property>
+<name>hbase.hstore.flush.thread</name>
+<value>20</value>
+<description>刷新线程数极少地方看到有此配置 不确定是否可用</description>  
+</property>
+<property>
+<name>hbase.hstore.compaction.thread</name>
+ <value>15</value>
+ <description>合并线程数极少地方看到有此配置不确定是否可用 </description>  
+ </property>
+  
+  <property>
+    <name>hbase.bucketcache.ioengine</name>
+    <value>offheap</value>
+    <description>新的缓存方式堆外内存减少GC不过降低读性能需要从内存拷贝到JVM heap
+			HBASE_HEAPSIZE > 20G 选择bucketcache</description>  
+  </property>
+  <property>
+    <name>hbase.bucketcache.size</name>
+    <value>0.36</value>
+    <description>表示读缓存大小占JVM内存大小比例，
+    也可以为实际值 HEAP*memstore*bucketcache比例
+     0.4*0.9 = 0.36  还有HBASE_OFFHEAPSIZE*1024*0.8</description> 
+  </property>
+  <property>
+    <name>hbase.bucketcache.percentage.in.combinedcache</name>
+    <value>0.90</value>
+      <description>用于缓存用户数据块的内存（堆外内存）占所有读缓存的比例，设为0.90 还有部分为LRU缓存 </description> 
+  </property>
+  
+  
+  <property>
+    <name>hbase.hstore.compaction.max</name>
+    <value>10</value>
+    <source>hbase-default.xml</source>
+    <description>一次minor compaction的最大file数 hbase.hstore.compactionThreshold	为最小合并数
+    hbase.hstore.blockingStoreFiles	 超过这个则block</description>
+  </property>
+  <property>
+    <name>hbase.regionserver.hlog.splitlog.writer.threads</name>
+    <value>10</value>
+    <description>恢复时候拆分线程数量默认3个</description>
+  </property>
+  <property>
+    <name>hbase.rpc.timeout</name>
+    <value>1800000</value>
+    <description>rpc请求超时时间300s 防止超时默认60s</description>
+  </property>
+  
+  <property>
+    <name>hbase.client.scanner.timeout.period</name>
+    <value>1800000</value>
+    <description>rpc请求超时时间300s 防止超时默认60s</description>
+  </property>
+  
+  <property>
+    <name>hbase.regionserver.restart.on.zk.expire</name>
+    <value>true</value>
+    <description>Zookeeper session expired will force regionserver exit.Enable this will make the regionserver restart.</description>
+  </property>
+  <property>
+    <name>dfs.socket.timeout</name>
+    <value>6000000</value>
+    <description>DFS的客户端和datanode连接超时时间默认就是10分钟 HDFS也需要配置</description>
+  </property>
+  <property>
+    <name>dfs.datanode.socket.write.timeout</name>
+    <value>6000000</value>
+    <description>DFS写操作超时时间 HDFS也需要配置 默认480000毫秒</description>
+  </property>
+
+
+</configuration>

@@ -1,0 +1,201 @@
+import org.apache.tools.ant.filters.FixCrLfFilter;
+import org.apache.tools.ant.filters.ReplaceTokens;
+
+apply from: 'versioning.gradle'
+
+tasks.withType(JavaCompile) {
+    sourceCompatibility = "1.8"
+    targetCompatibility = "1.8"
+    options.encoding="UTF-8"
+}
+
+javadoc { options.encoding = "UTF-8" }
+
+sourceSets.main{
+    java {
+        srcDirs += ['src/main/sh']
+    }
+}
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': description 
+        attributes "Implementation-Version": version
+        attributes "Main-Class" : "com.asiainfo.lcims.omc.boot.MainServer"
+    }
+}
+
+configurations.all {
+    resolutionStrategy {
+        eachDependency { details ->
+            if (details.requested.name == 'log4j') {
+                details.useTarget "org.slf4j:log4j-over-slf4j:1.7.5"
+            }
+            if (details.requested.name == 'commons-logging') {
+                details.useTarget "org.slf4j:jcl-over-slf4j:1.7.5"
+            }
+        }
+    }
+}
+
+dependencies {
+    compile(
+        [group: 'com.asiainfo.lcims', name: 'lcbmi.config', version:'1.1.13'],
+        [group: 'com.asiainfo.lcims', name: 'lcbmi.security', version:'1.4.1'],
+        [group: 'com.asiainfo.lcims', name: 'lcbmi.utils', version:'10.8.3'],
+        [group: 'org.springframework', name: 'spring-webmvc', version: "${spring_version}" ],
+        [group: 'org.springframework', name: 'spring-websocket', version: "${spring_version}"],
+        [group: 'org.springframework', name: 'spring-context-support', version: "${spring_version}" ],
+        [group: 'org.springframework', name: 'spring-tx', version: "${spring_version}" ],
+        [group: 'org.springframework', name: 'spring-jdbc', version: "${spring_version}" ],
+        [group: 'org.eclipse.jetty.aggregate', name: 'jetty-all', version:"${jetty_version}"],
+        [group: 'com.fasterxml.jackson.core',name: 'jackson-core',version: "${jackson_version}"],
+        [group: 'com.fasterxml.jackson.core',name: 'jackson-databind',version: "${jackson_version}"],
+        [group: 'org.freemarker', name: 'freemarker', version: "${freemarker_version}" ],
+        
+        [group: 'org.mybatis', name: 'mybatis', version:"${mybatis_version}"],
+        [group: 'org.slf4j', name: 'slf4j-api', version: "${slf4j_version}" ],
+        [group: 'javax.inject', name: 'javax.inject', version: "1" ],
+        [group: 'org.aspectj', name: 'aspectjweaver', version: "1.8.9" ],
+        
+        [group: 'org.apache.shiro', name: 'shiro-core', version:"${shiro_version}"],
+        [group: 'org.apache.shiro', name: 'shiro-spring', version:"${shiro_version}"],
+        [group: 'org.apache.shiro', name:'shiro-ehcache', version:"${shiro_version}"],
+        [group: 'net.sf.ehcache', name:'ehcache-core', version:'2.6.6'],
+        [group: 'aopalliance', name: 'aopalliance', version: '1.0'],
+
+        [group: 'commons-lang',name:'commons-lang',version:'2.6'],
+        [group: 'commons-beanutils', name: 'commons-beanutils', version:'1.9.1'],
+        [group: 'com.github.abel533',name: 'ECharts',version:'2.2.0.1'],
+                
+        [group: 'io.netty', name: 'netty-all', version:'4.0.21.Final'],
+        [group: 'com.alibaba', name: 'fastjson', version: '1.2.69'],
+        
+        [group: 'org.apache.poi',name: 'poi',version: '3.13'],
+        [group: 'org.apache.poi',name: 'poi-ooxml',version: '3.13'],
+        [group: 'org.apache.poi',name: 'poi-ooxml-schemas',version: '3.13'],
+        [group: 'org.apache.xmlbeans',name: 'xmlbeans',version: '2.6.0'],
+		[group: 'com.alibaba', name: 'druid', version:"${druid_version}"],
+        [group: 'org.quartz-scheduler',name:'quartz',version:'2.2.2'],
+        [group: 'javax.mail', name: 'mail', version: '1.4.7'],
+        [group: 'com.jcraft', name: 'jsch', version: '0.1.53'],
+        [group: 'commons-io', name: 'commons-io', version: '2.2'],
+        [group: 'org.snmp4j', name: 'snmp4j', version:'2.5.6'],
+        [group: 'redis.clients', name: 'jedis', version: '3.1.0']
+    )
+    
+    compile(group: 'org.apache.hbase', name: 'hbase-client', version:"1.2.2"){
+        exclude group: 'org.slf4j',module: "slf4j-log4j12"
+        exclude group: 'tomcat',module: "jasper-compiler"
+        exclude group: 'javax.servlet',module: "servlet-api"
+    }
+    
+    runtime(
+        [group: 'org.mybatis', name: 'mybatis-spring', version:"${mybatis_spring_version}"],
+        
+        [group: 'commons-fileupload', name: 'commons-fileupload', version: "1.3" ],
+        
+        [group: 'org.slf4j', name: 'jcl-over-slf4j', version: "${slf4j_version}" ],
+        [group: 'ch.qos.logback', name: 'logback-classic', version:'1.0.11'],
+        [group: 'com.oracle', name: 'ojdbc14', version:'10.2.0.4.0'],
+        [group: 'mysql', name: 'mysql-connector-java', version:'5.1.31']
+    )
+    
+    testCompile(
+        [group: 'junit', name: 'junit', version: '4.11'],
+        [group: 'org.powermock', name: 'powermock-api-mockito', version:'1.5'],
+        [group: 'org.powermock', name: 'powermock-module-junit4', version:'1.5']
+    )
+}
+
+task libs(type: Copy) {
+    from configurations.runtime
+    into "$buildDir/libs"
+}
+
+processResources(){
+    filesNotMatching('**/*/logo*') {
+        filter(ReplaceTokens,tokens: loadEnv());
+        filter ReplaceTokens, tokens: [
+            "version": version
+        ]
+        
+        filter(FixCrLfFilter,
+            eol: FixCrLfFilter.CrLf.newInstance('lf'),
+            tab: FixCrLfFilter.AddAsisRemove.newInstance('asis'),
+            tablength: 4,
+            eof: FixCrLfFilter.AddAsisRemove.newInstance('remove'),
+            fixlast: true)
+    }
+}
+
+task processShell(type: Copy) {
+    description = " copy shell scripts to buildDir/shell"
+    from 'src/main/sh'
+    into "$buildDir/sh"
+    filter(ReplaceTokens,tokens: loadEnv());
+    filter(FixCrLfFilter,
+        eol: FixCrLfFilter.CrLf.newInstance('lf'),
+        tab: FixCrLfFilter.AddAsisRemove.newInstance('asis'),
+        tablength: 4,
+        eof: FixCrLfFilter.AddAsisRemove.newInstance('remove'),
+        fixlast: true)
+}
+
+task processWebapp(type:Copy){
+    description = " copy webapp to buildDir/webapp"
+    from 'src/main/webapp'
+    into "$buildDir/webapp"
+}
+
+processResources.dependsOn(processWebapp)
+processResources.dependsOn(processShell)
+build.dependsOn(libs)
+
+task deploy(type: Copy) {
+    description = ' deploy all the binary and config files to destination(prefix) '
+    def destFold=file("$prefix")
+    into(destFold)
+    from("$buildDir/libs"){
+        into("libs")
+    }
+    from("$buildDir/sh"){
+        into("sh")
+    }
+    from("$buildDir/webapp"){
+        into("webapp")
+    }
+    doFirst{
+        logger.lifecycle("deploy files to : $destFold")
+    }
+    doLast{
+        logger.lifecycle("deploy success!")
+    }
+}
+
+task preDeploy() << {
+    description = ' pre actions for task deploy'
+    def logsdir=file("$prefix/logs")
+    if(!logsdir.exists()){
+        logger.lifecycle("create logsdir  : $logsdir")
+        logsdir.mkdirs();
+    }else{
+        logger.lifecycle("$logsdir  exists!")
+    }
+    def libs=fileTree("$prefix/libs")
+    libs.each {jar ->
+        jar.delete()
+    }
+    def webapp=fileTree("$prefix/webapp")
+    webapp.each {wa ->
+        wa.delete()
+    }
+}
+
+deploy.dependsOn build
+deploy.dependsOn preDeploy
+
+task runServer(type: JavaExec) {
+    main = 'com.asiainfo.lcims.omc.boot.MainServer'
+    classpath = sourceSets.main.runtimeClasspath
+}

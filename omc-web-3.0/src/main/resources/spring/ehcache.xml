@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache name="shirocache">
+    
+    <!-- 
+    user.home（用户的~目录）
+    user.dir（用户当前的工作目录）
+    java.io.tmpdir（默认的临时目录）
+    ehcache.disk.store.dir（ehcache的配置目录）
+        绝对路径（如：d:\\ehcache）
+     -->
+    <diskStore path="user.dir"/>
+    <defaultCache    
+        maxElementsInMemory="1000"    
+        eternal="false"    
+        timeToIdleSeconds="120"    
+        timeToLiveSeconds="120"    
+        overflowToDisk="true"    
+        /> 
+    <!-- 登录记录缓存 锁定10分钟 -->
+    <cache name="passwordRetryCache"
+           maxEntriesLocalHeap="2000"
+           eternal="false"
+           timeToIdleSeconds="600"
+           timeToLiveSeconds="0"
+           overflowToDisk="false"
+           statistics="true">
+    </cache>
+
+    <cache name="authorizationCache"
+           maxEntriesLocalHeap="2000"
+           eternal="false"
+           timeToIdleSeconds="600"
+           timeToLiveSeconds="0"
+           overflowToDisk="false"
+           statistics="true">
+    </cache>
+
+</ehcache>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+    xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+    ">
+
+<!--     <import resource="classpath*:/datasource.xml" /> -->
+    <import resource="datasource.xml" />
+    <import resource="shiro-filter.xml" />
+    <context:component-scan base-package="com.asiainfo.lcims.omc.service" />
+    <context:component-scan base-package="com.asiainfo.lcims.omc.param" />
+    <context:component-scan base-package="com.asiainfo.lcims.omc.flowmonitor" />
+    <mvc:annotation-driven />
+    <bean id="springContextUtil" class="com.asiainfo.lcims.omc.util.SpringContextUtil"/>
+
+    <bean id="conversionService"
+        class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+        <property name="registerDefaultFormatters" value="true" />
+        <property name="formatters">
+            <set>
+                <bean
+                    class="org.springframework.format.number.NumberFormatAnnotationFormatterFactory" />
+            </set>
+        </property>
+        <property name="formatterRegistrars">
+            <set>
+                <bean
+                    class="org.springframework.format.datetime.joda.JodaTimeFormatterRegistrar">
+                    <property name="dateFormatter">
+                        <bean
+                            class="org.springframework.format.datetime.joda.DateTimeFormatterFactoryBean">
+                            <property name="pattern" value="yyyyMMdd" />
+                        </bean>
+                    </property>
+                </bean>
+            </set>
+        </property>
+    </bean>
+<!--     <bean id="quartzManager" class="com.asiainfo.lcims.omc.flowmonitor.quartz.FlowMonitorQuartzManager" > -->
+<!--     </bean> -->
+    <!-- AOP式方法级权限检查 这两个类主要用于注解 -->
+    <aop:config proxy-target-class="true"/>
+    <!--<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"-->
+          <!--depends-on="lifecycleBeanPostProcessor" />-->
+    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager" ref="securityManager"/>
+    </bean>
+
+    <bean id="timeCleaningQuartzManager" class="com.asiainfo.lcims.omc.timecleaning.TimeCleaningQuartzManager" >
+    </bean>
+
+    <bean id="quartzAisManager" class="com.asiainfo.lcims.omc.quartz.QuartzManager" >
+    </bean>
+    
+    <!-- 上海移动bras定时入库 -->
+    <bean id="brasIpCollectManager" class="com.asiainfo.lcims.omc.brasipcollect.BrasIpCollectQuartzManager" >
+    </bean>
+    
+    <!-- 甘肃移动 模拟拨测 -->
+    <bean id="analogDialUpQuartzManager" class="com.asiainfo.lcims.omc.analogdialup.AnalogDialUpQuartzManager" >
+    </bean>
+    
+    <!-- 重庆移动 APN -->
+    <bean id="apnQuartzManager" class="com.asiainfo.lcims.omc.apn.ApnQuartzManager" >
+    </bean>
+    <!-- <bean id="addApnManager" class="com.asiainfo.lcims.omc.apn.AddApnManager" >
+    </bean> -->
+    
+    <bean id="stringConverter"
+        class="org.springframework.http.converter.StringHttpMessageConverter">
+        <property name="supportedMediaTypes">
+            <list>
+                <value>text/plain;charset=UTF-8</value>
+            </list>
+        </property>
+    </bean>
+    <bean class="com.asiainfo.lcims.omc.param.InitDataListener">
+    </bean>
+    
+	<!-- 输出对象转JSON支持 -->
+    <bean id="jsonConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+         <property name="supportedMediaTypes"> 
+          <list> 
+              <value>text/plain;charset=UTF-8</value>
+          </list> 
+        </property>
+    </bean>
+    <bean
+        class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+        <property name="messageConverters">
+            <list>
+                <ref bean="stringConverter" />
+                <ref bean="jsonConverter" />
+            </list>
+        </property>
+    </bean>
+
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"></bean>
+
+</beans>

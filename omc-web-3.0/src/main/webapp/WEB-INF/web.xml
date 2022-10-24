@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee"  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+    xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"  
+    version="2.4">
+    <display-name>omc-web</display-name>
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:spring/spring-common-config.xml</param-value>
+    </context-param>
+     <!-- start listener -->
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    <!-- end listener -->
+    <servlet>
+        <servlet-name>omc</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <!-- Configure DispatcherServlet to use AnnotationConfigWebApplicationContext
+            instead of the default XmlWebApplicationContext -->
+        <init-param>
+            <param-name>contextClass</param-name>
+            <param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+        </init-param>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>com.asiainfo.lcims.omc.conf</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>omc</servlet-name>
+        <url-pattern>/*</url-pattern>
+    </servlet-mapping>
+
+    <security-constraint>  
+       <web-resource-collection>  
+            <url-pattern>/*</url-pattern>  
+            <http-method>OPTIONS</http-method>
+            <http-method>DELETE</http-method>  
+            <http-method>HEAD</http-method>  
+            <http-method>OPTIONS</http-method>  
+            <http-method>TRACE</http-method> 
+        </web-resource-collection>  
+        <auth-constraint></auth-constraint>  
+     </security-constraint>  
+
+    <!-- 设置Frame头，防止被嵌套 -->
+    <filter>  
+        <filter-name>FrameFilter</filter-name>  
+        <filter-class>com.asiainfo.lcims.omc.web.security.FrameFilter</filter-class>  
+    </filter>  
+    <filter-mapping>  
+        <filter-name>FrameFilter</filter-name>  
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <!-- 解决CSRF 跨站请求伪造漏洞问题 -->
+    <filter>
+        <filter-name>RefererFilter</filter-name>
+        <filter-class>com.asiainfo.lcims.omc.filter.RefererFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>RefererFilter</filter-name>
+        <url-pattern>/view/*</url-pattern>
+    </filter-mapping>
+
+    <!-- end filter -->
+
+    <!-- start filter -->
+    <filter>
+        <filter-name>CharacterEncodingFilter</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>utf-8</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>CharacterEncodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <filter> 
+       <filter-name>shiroFilter</filter-name> 
+       <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class> 
+       <init-param>
+           <param-name>targetFilterLifecycle</param-name>
+           <param-value>true</param-value>
+       </init-param>
+     </filter> 
+     <filter-mapping> 
+       <filter-name>shiroFilter</filter-name> 
+       <url-pattern>/*</url-pattern> 
+     </filter-mapping>
+    
+    <!-- 解决HTTP PUT请求Spring无法获取请求参数的问题 -->  
+    <filter>  
+        <filter-name>HiddenHttpMethodFilter</filter-name>  
+        <filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>  
+    </filter>  
+    <filter-mapping>  
+        <filter-name>HiddenHttpMethodFilter</filter-name>  
+        <servlet-name>omc</servlet-name>  
+    </filter-mapping> 
+    <!-- end filter -->
+    
+    <!-- 解决Xss 漏洞问题 -->
+    <filter>  
+        <filter-name>XssFilter</filter-name>  
+        <filter-class>com.asiainfo.lcims.omc.filter.XssFilter</filter-class>  
+    </filter>  
+    <filter-mapping>  
+        <filter-name>XssFilter</filter-name>  
+        <url-pattern>/*</url-pattern>
+    </filter-mapping> 
+    <!-- end filter -->
+    
+    <mime-mapping>
+        <extension>wsdl</extension>
+        <mime-type>text/xml</mime-type>
+    </mime-mapping>
+    <mime-mapping>
+        <extension>xsd</extension>
+        <mime-type>text/xml</mime-type>
+    </mime-mapping>
+    <mime-mapping>
+        <extension>tex</extension>
+        <mime-type>application/x-tex</mime-type>
+    </mime-mapping>
+    <mime-mapping>
+        <extension>tar</extension>
+        <mime-type>application/x-tar</mime-type>
+    </mime-mapping>
+    <mime-mapping>
+        <extension>txt</extension>
+        <mime-type>application/octet-stream</mime-type>
+    </mime-mapping>
+    <mime-mapping>
+        <extension>gz</extension>
+        <mime-type>application/x-gzip</mime-type>
+    </mime-mapping>
+
+    <error-page>
+        <error-code>404</error-code>
+        <location>/resources/404.html</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/resources/404.html</location>
+    </error-page>
+    <error-page>
+        <error-code>414</error-code>
+        <location>/resources/404.html</location>
+    </error-page>
+    <error-page>
+        <error-code>505</error-code>
+        <location>/resources/404.html</location>
+    </error-page>
+    <error-page>
+        <error-code>400</error-code>
+        <location>/resources/404.html</location>
+    </error-page>
+    <error-page>
+        <location>/resources/error.jsp</location>
+    </error-page>
+</web-app>

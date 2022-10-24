@@ -1,0 +1,163 @@
+*{ margin: 0; padding: 0;}
+*:focus {outline: none;}
+body{ font-size: 14px; font-family: Microsoft Yahei; }
+.green{color:#1caf00; }
+.red{color: #e65455;}
+.main{ margin: 0 auto; position:absolute;  top:15%; left:50%; margin-left:-190px; width:380px;  overflow: hidden;}
+.box{ width:380px; margin: 0 auto; position: relative; height: 100%;}
+.logo_box{  height:50px; line-height: 50px; color: #fff; margin: 0 auto;margin-bottom: 15px; text-align: center; font-size: 28px; }
+.logo_box img{vertical-align: middle; padding-right: 5px;}
+.mt15{margin-top: 15px;}
+.errors_box{height: 20px;}
+.errors{ padding-top: 10px; padding-left: 10px; line-height: 20px;  font-size: 12px; color: #e65455;}
+.row{ position: relative; padding: 5px 0;width: 307px; margin-left: 34px;   }
+.required{ width: 250px; height: 28px;color: rgb(51, 51, 51); padding: 5px 10px 5px 45px; line-height: 28px; font-size: 14px; font-weight: bold; border-radius: 2px; border:none; border:1px solid #e8e8ee; background:#fbfbfb;}
+.password{background:#fbfbfb;}
+.yzm{ width: 167px; height: 28px; }
+.yzm_input { position: relative;}
+.yzm_input i{ position: absolute; right: 5px; top:10px; }
+.yzm_img{ margin-top: 5px; margin-left: 5px; cursor: pointer;}
+.check{ display: none;}
+.btn-submit{ width: 300px; height: 36px;text-align: center;background: #5fbcf3; border: 1px solid #5fbcf3;border-radius: 3px; font-size: 16px; font-family: Microsoft Yahei; color: #fff; font-weight: normal; cursor: pointer; margin-top: 10px;}
+.btn-submit:hover{ background: #48baff; border: 1px solid #48baff;}
+.btn-reset{ display: none;}
+.foot{ position:absolute; bottom:0px; width: 100%; height: 50px; line-height: 50px; font-size: 12px; text-align: center; color: #fff; font-family: arial;}
+.fl{ float:left;}
+.clearfix:before, .clearfix:after{ display: block; content: ""; clear: both;}
+.login_right{ background:#fff;border-radius: 4px; margin: 0 auto;text-align: center; padding-bottom: 40px;}
+.login_right h2{ color:#e35b5f; font-weight:normal;}
+.login_title{ padding-top: 20px; font-size: 18px;}
+.login-label{
+    position: absolute;
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+    width:36px;
+    height: 39px;
+     line-height: 39px;
+    border-right:1px solid #d5dadd;
+    text-align:center;
+    vertical-align: middle;
+    background:#333;  color: #fff;  }
+.login-label span{ font-size: 18px;}
+.remember-pwd{ font-size: 12px;}
+
+.dap-login-bg {
+    background-color: #dadada;
+    background-image: url("../images/login_bg_01.jpg");
+    padding-top: 0px;
+    margin-top: 60px;
+}
+.dap-login-right-bg {
+	text-align: left;
+	margin-top: 150px;
+	padding-left: 3px;
+}
+.dap-login-error {
+    background: url(../images/error.png) no-repeat 0 14px;
+    width: auto;
+    height: 50px;
+    line-height: 50px;
+    color: #ff0000;
+    padding-left: 30px;
+    font-size: 14px;
+    position: absolute;
+    top: 0;
+    right: 10px;
+    display: none;
+    z-index: 9999;
+}
+.dap-login-remember-pwd {
+    text-align: right;
+    color: #707070;
+}
+.dap-login-input-bg {
+    background-color: #ececec;
+    box-shadow: 0 12px 8px rgba(0,0,0,.3);
+    border-radius: 6px;
+}
+.dap-login-margin {
+	margin-top: 20px;
+	margin-bottom: 30px;
+}
+.dap-login-btn {
+	width: 100%;
+	background-color: #47c535;
+	margin-bottom: 50px;
+}
+.dap-login-input-txt {
+	background-color: #d3d3d3;
+	color: #400000;
+}
+.dap-login-line {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+.dap-login-logo {
+	text-align: center;
+}
+
+.dap-login-verifycode_text {
+    width:70%;
+    float:left;
+    margin-right: 10px;
+    color: #00ff00;
+}
+
+.dap-login-name {
+    margin:0 auto;
+    font-size:35px;
+}
+
+
+.dap-login-verifycode_img {
+    margin-top:5px
+}
+
+@media (max-width: 768px) {
+  #right-bg {
+    display: none;
+  }
+}
+
+#username,
+#verifycode,
+#password {
+	border-top-right-radius: 6px;
+	border-bottom-right-radius: 6px;
+}
+.dap-mon-unauthorized{
+    background-color: #FBFBFA;
+}
+.dap-mon-holemain>.dap-monitor-hostDetail{
+    margin-left:-15px;
+    margin-right:-15px;
+}
+/*404-50X页面*/
+.dap-mon-errorPage-box{
+    width:730px;
+    margin:70px auto 0;
+}
+.dap-mon-errorPage-txt{
+    padding-right:20px;
+    width: 344px;
+}
+.dap-mon-erroePage-txt-info{
+    margin:30px 0;
+}
+.dap-mon-errorPage-txt-ttl{
+    color: #656767;
+    font-size: 38px;
+}
+.dap-mon-errorPage-pic404{
+    background:url(../images/404-pic.png) no-repeat;
+    width: 366px;
+    height: 294px;
+}
+.dap-mon-errorPage-pic50x{
+    background:url(../images/50X-pic.png) no-repeat;
+    width: 366px;
+    height: 294px;
+}
+.dap-mon-errorPage-btn-box .btn-lg{
+    width:175px
+}

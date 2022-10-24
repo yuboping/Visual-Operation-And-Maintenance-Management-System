@@ -1,0 +1,80 @@
+ext.versionFile = file('version.properties')
+
+gradle.taskGraph.whenReady {taskGraph ->
+    initVersion()
+}
+
+def initVersion() {
+    if(!versionFile.exists()){
+        logger.quiet "Init version.properties for Project[$project.name]!"
+        versionFile.createNewFile()
+        versionFile.write('major=1\nminor=0\nrevision=0')
+    }
+    Properties versionProps = new Properties()
+    versionFile.withInputStream { stream ->
+        versionProps.load(stream)
+    }
+    project.version = new ProjectVersion(versionProps)
+}
+
+task incMajorVersion(group: 'versioning', description: 'Increments project major version.') << {
+    String currentVersion = version.toString()
+    ++version.major
+    version.minor=0
+    version.revision=0
+    String newVersion = version.toString()
+    logger.lifecycle "Incrementing major project version: $currentVersion -> $newVersion"
+
+    ant.propertyfile(file: versionFile) {
+        entry(key: 'major', type: 'int', operation: '+', value: 1)
+    }
+}
+
+task incMinorVersion(group: 'versioning', description: 'Increments project minor version.') << {
+    String currentVersion = version.toString()
+    ++version.minor
+    version.revision=0
+    String newVersion = version.toString()
+    logger.lifecycle "Incrementing minor project version: $currentVersion -> $newVersion"
+
+    ant.propertyfile(file: versionFile) {
+        entry(key: 'minor', type: 'int', operation: '+', value: 1)
+    }
+}
+
+task incRevisVersion(group: 'versioning', description: 'Increments project revision version.') << {
+    String currentVersion = version.toString()
+    ++version.revision
+    String newVersion = version.toString()
+    logger.lifecycle "Incrementing revision project version: $currentVersion -> $newVersion"
+
+    ant.propertyfile(file: versionFile) {
+        entry(key: 'revision', type: 'int', operation: '+', value: 1)
+    }
+}
+
+class ProjectVersion {
+    Integer major
+    Integer minor
+    Integer revision
+    Boolean release
+    
+    ProjectVersion(Properties versionProps){
+        this.major=versionProps.major.toInteger()
+        this.minor=versionProps.minor.toInteger()
+        this.revision=versionProps.revision.toInteger()
+        this.release=false
+    }
+
+    ProjectVersion(Integer major, Integer minor, Integer revision) {
+        this(major, minor)
+        this.revision = revision
+        this.release=false
+    }
+
+    @Override
+    String toString() {
+        "$major.$minor.$revision"
+        "$major.$minor.$revision${release ? '' : '-SNAPSHOT'}"
+    }
+}

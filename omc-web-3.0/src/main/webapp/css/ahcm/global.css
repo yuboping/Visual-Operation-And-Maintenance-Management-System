@@ -1,0 +1,993 @@
+* {
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+body { /*height: 100%;*/
+    /*background: #eff2f3;*/
+    background: url("/images/bg.jpg") no-repeat top center;
+    background-size: cover;
+    font-family: Microsoft Yahei, Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    overflow: hidden;
+}
+.contentmain {
+    margin-left: 150px;
+}
+
+input[type="checkbox"] {
+    border-color: #ccc;
+    margin: 0 4px 0 0;
+    vertical-align: -1px;
+}
+
+input[type="radio"] {
+    border-color: #ccc;
+    margin: 0 4px 0 0;
+    vertical-align: -1px;
+}
+
+img {
+    -moz-force-broken-image-icon: 1;
+}
+
+a, a:hover, a:focus {
+    text-decoration: none;
+    outline: none;
+    blr: expression(this.onFocus=this.blur());
+}
+
+i {
+    font-style: normal;
+}
+
+.mb10 {
+    margin-bottom: 10px;
+}
+
+.mt15 {
+    margin-top: 15px;
+}
+
+.ml15 {
+    margin-left: 15px;
+}
+
+.mb0 {
+    margin-bottom: 0;
+}
+
+.mt5 {
+    margin-top: 5px;
+}
+
+.mb20 {
+    margin-bottom: 20px;
+}
+
+.mb10 {
+    margin-bottom: 10px;
+}
+
+.mb15 {
+    margin-bottom: 15px;
+}
+
+.ml40 {
+    margin-left: 40px;
+}
+
+.ml50 {
+    margin-left: 50px;
+}
+
+.mt40 {
+    margin-top: 40px;
+}
+
+.mb40 {
+    margin-bottom: 40px;
+}
+
+.mr40 {
+    margin-right: 40px;
+}
+
+.ml200 {
+    margin-left: 200px;
+}
+.ml400 {
+    margin-left: 400px;
+}
+.lh20 {
+    line-height: 20px;
+}
+
+.height25 {
+    min-height: 25px;
+    max-height: 25px;
+}
+
+.c666 {
+    color: #666;
+}
+
+.c999 {
+    color: #999;
+}
+
+.c000 {
+    color: #000;
+}
+
+.bg_c999 {
+    background: #999999;
+}
+
+.dep_red {
+    color: #fc5969;
+}
+
+.dep_red_bg {
+    background: #fc5969;
+}
+
+.dep_yellow {
+    color: #ffac06;
+}
+
+.dep_yellow_bg {
+    background: #ffac06;
+}
+
+.blue_bg {
+    background: #4dc3d2;
+}
+
+.blue_bg2 {
+    background: #5cb4de;
+}
+
+.green_bg {
+    background: #62cca5;
+}
+
+.yellow_bg {
+    background: #e5c662;
+}
+
+.orange_bg {
+    background: #f88346;
+}
+
+.purple_bg {
+    background: #b28be5;
+}
+
+.fl {
+    float: left;
+}
+
+.fr {
+    float: right;
+}
+/*清除浮动*/
+.clearfix:before, .clearfix:after {
+    display: block;
+    content: "";
+    clear: both;
+}
+iframe {
+    width: 100%;
+    height: 600px;
+    border: none;
+}
+/*头部*/
+.omc_wrap {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 1110001;
+}
+
+.omc_header {
+    height: 50px;
+    position: relative;
+    z-index: 9990;
+}
+
+.omc_header .omc_w {
+    height: 50px;
+    width: 100%;
+    background-color:#000000;/* IE6和部分IE7内核的浏览器(如QQ浏览器)下颜色被覆盖 */
+    background-color:rgba(0,0,0,0.3); /* IE6和部分IE7内核的浏览器(如QQ浏览器)会读懂，但解析为透明 */
+    position: relative;
+    z-index: 9991;
+}
+
+.omc_header .omc_w .omc_logo {
+    width: 300px;
+    height: 50px;
+    color: #fff;
+    line-height: 50px;
+    vertical-align: middle;
+}
+
+.omc_header .omc_w .omc_logo .logo_name {
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 50px;
+    padding-left: 5px;
+}
+
+.omc_header .omc_w .omc_logo img {
+    padding-left: 10px;
+    margin-top: -5px;
+}
+
+.omc_header .header_menu ul li {
+    float: left;
+    font-size: 14px;
+    line-height: 50px;
+    padding: 0px 6px;
+}
+
+.omc_header .header_menu ul li a {
+    display: block;
+    height: 50px;
+    color: #fff;
+    font-size: 16px;
+    min-width: 80px;
+    text-align: center;
+}
+
+.omc_header .header_menu ul li a:hover {
+    border-bottom: 3px solid #5fbcf3;
+    text-decoration: none;
+}
+
+.omc_header .header_menu_active a {
+    border-bottom: 3px solid #5fbcf3;
+}
+
+/*信息划出提醒*/
+.message_outer{
+    position: fixed;
+    right: 0;
+    width: 220px;
+    top:51px;
+    z-index: 10000;
+
+}
+.message_outer .message_list {
+    position: absolute;
+    z-index: 999;
+    color: #fff;
+    width: inherit;
+    top: 0;
+    right: 0;
+    right: -500px;
+}
+
+.message_outer .message_list ul {
+    filter: alpha(opacity=90);
+    -moz-opacity: 0.9;
+    -khtml-opacity: 0.8;
+    opacity: 0.9;
+    -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+    background: rgba(0, 0, 0, 0.8) !important; /* IE无效，FF有效 */
+    padding-bottom: 20px;
+}
+
+.message_outer .message_list ul li {
+
+    padding: 6px 0;
+    line-height: 24px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.message_outer .message_list .menu_secttl {
+    padding: 0 10px;
+    filter: alpha(opacity=90);
+    -moz-opacity: 0.9;
+    -khtml-opacity: 0.8;
+    opacity: 0.9;
+    background: rgba(0, 0, 0, 0.8) !important; /* IE无效，FF有效 */
+}
+
+.message_outer .dap-close {
+    position: absolute;
+    right: 10px;
+    color: #999;
+    font-size: 16px;
+}
+
+.message_outer .message_list ul li  .error {
+    float: left;
+    width: 12px;
+    height: 12px;
+    background: #dd1102;
+    position: relative;
+    top: 7px;
+    border-radius: 12px;
+}
+.message_outer .message_list .message_content{
+    float: left;
+    width: 180px;
+    padding-left: 5px;
+    color: #fff;
+}
+.message_outer .message_list ul li .warn {
+    float: left;
+    width: 12px;
+    height: 12px;
+    background: #ffa841;
+    position: relative;
+    top: 7px;
+    border-radius: 12px;
+}
+
+/*实时告警*/
+.omc_info_container {
+    position: fixed;
+    z-index: 11998;
+    top: 54px;
+    right: 0px;
+    pointer-events: none;
+}
+
+.omc_info_container li {
+    position: relative;
+    pointer-events: auto;
+    overflow: hidden;
+    margin: 0 0 6px;
+    width: 270px;
+    border-radius: 2px;
+    display: table;
+    top: -140px;
+    right: 10px;
+    box-shadow: 0 0 4px rgba(0, 0, 0, .2);
+}
+
+.omc_info_container li:hover {
+    opacity: 1;
+    -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+    filter: alpha(opacity=100);
+    cursor: pointer;
+}
+
+.omc_info_container li .cont {
+    /* float:left;
+     margin-right:134px;*/
+    display: table;
+    vertical-align: middle;
+}
+
+.omc_info_container li .cont:before {
+
+    /*padding-top:5px;*/
+}
+
+.omc_info_container li .cont div {
+    line-height: 18px;
+    width: 215px;
+    display: table-cell;
+    vertical-align: middle;
+    padding-left: 5px;
+}
+
+.omc_info_container .dap-time {
+    line-height: 20px;
+    font-size: 12px;
+    color: #999;
+    white-space: nowrap;
+}
+
+.omc_info_container .aim {
+    padding-right: 5px;
+    font-weight: bold;
+}
+
+#info-container li.info-warn {
+    background: #fff;
+}
+
+#info-container li.info-error {
+    background: #fff;
+}
+
+.omc_info_container li .cont i {
+    font-style: normal;
+    display: table-cell;
+    font-size: 20px;
+    vertical-align: middle;
+    padding: 10px 8px;
+    color: #fff;
+
+}
+
+.omc_info_container li .dap-close {
+    top: 0;
+    color: #333;
+    right: 5px;
+}
+
+/*个人信息*/
+.omc_user {
+    position: absolute;
+    right: 0;
+}
+
+.omc_user .user-img {
+    position: relative;
+    z-index: 2;
+    height: 50px;
+    padding: 0 10px;
+    line-height: 50px;
+}
+
+.omc_user .user-img p {
+    text-align: right;
+    height: 20px;
+    display: block;
+    margin: 0;
+}
+
+.omc_user .user-img span, .user-img a {
+    padding-right: 15px;
+    color: #fff;
+    border-right: 1px solid #d5d5d5;
+}
+
+.omc_user .user-img a:hover {
+    color: #5fbcf3;
+}
+
+.omc_user .user-img span.text-primary {
+    color: #666;
+}
+
+.omc_user .user-img i {
+    font-size: 16px;
+    padding-right: 2px;
+    padding-left: 15px;
+    color: #fff;
+}
+
+.omc_user .user-img a.border-none {
+    border: none;
+}
+
+.omc_user .user-img .user-messages {
+    height: 15px;
+    vertical-align: middle;
+    margin-left: 5px;
+    text-align: center;
+    color: #FFF;
+    line-height: 15px;
+    overflow: hidden;
+    background: #fc5969;
+    border-radius: 10px;
+    padding: 0px 5px;
+    font-weight: normal;
+    display: inline-block;
+    margin-top: -3px;
+    border-right: none;
+}
+
+/*侧栏*/
+.omc_sidebar {
+    width: 200px;
+    background-color:#f7f7f9;/* IE6和部分IE7内核的浏览器(如QQ浏览器)下颜色被覆盖 */
+    /*background-color:rgba(0,0,0,0.3); !* IE6和部分IE7内核的浏览器(如QQ浏览器)会读懂，但解析为透明 *!*/
+    left: 0;
+    z-index: 999;
+    position: absolute;
+    overflow-y: auto;
+    top: 50px;
+}
+
+/*.menu{ margin-top: 10px;}*/
+.omc_sidebar .omc_sidebar_menu {
+    position: absolute;
+    left: 0;
+    overflow: hidden;
+    height: 100%;
+}
+
+.omc_sidebar .omc_sidebar_menu  a {
+    position: relative;
+    display: block;
+    text-decoration: none;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    height: 40px;
+    line-height: 40px;
+    color: #638399;
+    width: 200px;
+    font-size: 14px;
+
+}
+
+.omc_sidebar .omc_sidebar_menu  a:hover {
+/*     color: #6ab0f4; */
+    width: 200px;
+    border-top-right-radius: 2px;
+    font-weight: bolder;
+    border-bottom-right-radius: 2px;
+}
+
+.omc_sidebar .omc_sidebar_menu  .vtitle {
+    height: 40px;
+    line-height: 40px;
+    position: relative;
+    font-weight: normal;
+    /*background-color:#000000;!* IE6和部分IE7内核的浏览器(如QQ浏览器)下颜色被覆盖 *!*/
+    /*background-color:rgba(0,0,0,0.2); !* IE6和部分IE7内核的浏览器(如QQ浏览器)会读懂，但解析为透明 *!*/
+}
+
+.omc_sidebar .omc_sidebar_menu  .vtitle_name {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 100px;
+    position: absolute;
+}
+
+.omc_sidebar .omc_sidebar_menu  .vtitle em {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    font-style: normal;
+    color: #6B7289;
+}
+
+.omc_sidebar .omc_sidebar_menu  .active a {
+    color: rgb(75,164,245);
+    /*border-right: 3px solid #6ab0f4;*/
+    /*background: #2b3545;*/
+    width: 200px;
+    font-size:15px;
+    font-weight: bolder;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+
+}
+.omc_sidebar .omc_sidebar_menu  .active i{
+    color: rgb(75,164,245);
+
+}
+.omc_sidebar .omc_sidebar_menu  .active em {
+    color: #6ab0f4;
+}
+
+.omc_sidebar .omc_sidebar_menu  .omc_menu_body {
+    display: block;
+    margin-bottom: 0;
+}
+.omc_sidebar .omc_sidebar_menu  .omc_menu_body a{
+    font-size: 12px;
+}
+.omc_sidebar .omc_sidebar_menu  .omc_menu_body li.active {
+    color: #6ab0f4;
+    position: relative;
+    width: 200px;
+
+}
+.omc_sidebar .omc_sidebar_menu .vcon{
+    /*background-color:#000000;!* IE6和部分IE7内核的浏览器(如QQ浏览器)下颜色被覆盖 *!*/
+    /*background-color:rgba(0,0,0,0.1); !* IE6和部分IE7内核的浏览器(如QQ浏览器)会读懂，但解析为透明 *!*/
+}
+
+.omc_sidebar .omc_sidebar_menu .omc_menu_body a i {
+    padding-right: 10px;
+    padding-left: 25px;
+}
+
+.omc_sidebar .omc_sidebar_menu .omc_menu_body a:hover {
+/*     color: #6ab0f4; */
+    /*border-right: 3px solid #6ab0f4;*/
+    /*background: #2b3545;*/
+    width: 200px;
+}
+
+.omc_sidebar .omc_sidebar_menu .on, .menu a.active{
+    color: #6ab0f4;
+
+}
+
+.omc_sidebar .omc_sidebar_menu  .on a {
+    color: #fff;
+}
+
+.omc_sidebar .omc_sidebar_menu  .on a:hover, .menu a.on:hover {
+    color: #6ab0f4;
+}
+
+.omc_sidebar .omc_sidebar_menu .icon_menu {
+    margin-left: 10px;
+    display: inline-block;
+    width: 22px;
+    vertical-align: middle;
+
+}
+
+.omc_sidebar .omc_sidebar_menu .message_box {
+    position: absolute;
+    right: 5px;
+    top: 10px;
+    height: 15px;
+    line-height: 15px;
+    text-align: center;
+}
+
+.omc_sidebar .omc_sidebar_menu .menu_message {
+    font-size: 10px;
+    color: #fff;
+    width: 8px;
+    height: 8px;
+    display: block;
+    padding: 0px 0px;
+    border-radius: 6px;
+    margin-right: 5px;
+     margin-top: 7px;
+}
+
+/*首页*/
+.omc_main {
+    position: absolute;
+    width: 100%;
+    top:51px;
+    background:#f7f7f9;
+}
+
+.omc_main .omc_home_Big {
+    width: 70%;
+}
+
+.display_none {
+    display: none;
+}
+
+.home_bigsingle {
+    height: 520px;
+    background-color:#000000;/* IE6和部分IE7内核的浏览器(如QQ浏览器)下颜色被覆盖 */
+    background-color:rgba(0,0,0,0.2); /* IE6和部分IE7内核的浏览器(如QQ浏览器)会读懂，但解析为透明 */
+    margin: 10px;
+}
+.home_bigsingle_in_div {
+    height: 480px;
+    border-radius: 4px;
+    background-color:#000000;/* IE6和部分IE7内核的浏览器(如QQ浏览器)下颜色被覆盖 */
+    background-color:rgba(0,0,0,0.2); /* IE6和部分IE7内核的浏览器(如QQ浏览器)会读懂，但解析为透明 */
+}
+.home_bigsingle2 {
+    height: 300px;
+    border-radius: 4px;
+    margin: 10px;
+    background-color:#000000;/* IE6和部分IE7内核的浏览器(如QQ浏览器)下颜色被覆盖 */
+    background-color:rgba(0,0,0,0.2); /* IE6和部分IE7内核的浏览器(如QQ浏览器)会读懂，但解析为透明 */
+}
+.home_bigsingle2_in_div {
+    height: 270px;
+    border-radius: 4px;
+    background-color:#000000;/* IE6和部分IE7内核的浏览器(如QQ浏览器)下颜色被覆盖 */
+    background-color:rgba(0,0,0,0.2); /* IE6和部分IE7内核的浏览器(如QQ浏览器)会读懂，但解析为透明 */
+}
+.omc_main .omc_home_small {
+    width: 30%;
+}
+
+.omc_home_div_p {
+    color: #ffffff;
+    margin-left: 2px;
+}
+
+.home_single {
+    height: 270px;
+    background-color:#000000;/* IE6和部分IE7内核的浏览器(如QQ浏览器)下颜色被覆盖 */
+    background-color:rgba(0,0,0,0.2); /* IE6和部分IE7内核的浏览器(如QQ浏览器)会读懂，但解析为透明 */
+    margin-right: 10px;
+    margin-top: 10px;
+}
+.home_single_in_div {
+    height: 240px;
+    border-radius: 4px;
+    background-color:#000000;/* IE6和部分IE7内核的浏览器(如QQ浏览器)下颜色被覆盖 */
+    background-color:rgba(0,0,0,0.2); /* IE6和部分IE7内核的浏览器(如QQ浏览器)会读懂，但解析为透明 */
+}
+/*城市*/
+.omc_city {
+    /*margin-top:20px;*/
+    background: none;
+}
+
+.omc_city_single {
+    width: 25%;
+    text-align: center;
+    cursor: pointer;
+}
+
+.omc_city_single .omc_city_box {
+    margin-right: 10px;
+    margin-bottom: 10px;
+    margin: 10px;
+    padding: 50px 0;
+    color: #fff;
+}
+
+.omc_city_single .omc_city_box:hover {
+    color: #5fbcf3;
+    background-color:#000000;/* IE6和部分IE7内核的浏览器(如QQ浏览器)下颜色被覆盖 */
+    background-color:rgba(0,0,0,0.2); /* IE6和部分IE7内核的浏览器(如QQ浏览器)会读懂，但解析为透明 */
+}
+
+.omc_city .omc_city_icon {
+    position: relative;
+    height: 100px;
+    width: 100px;
+    line-height: 100px;
+    margin: 0 auto;
+}
+
+.omc_city .omc_city_icon i {
+    font-size: 80px;
+}
+
+.omc_city_iconname span {
+    font-size: 14px;
+    line-height: 30px;
+    color: #fff;
+}
+
+.omc_city_messgae {
+    position: absolute;
+    background: #fc5969;
+    color: #fff;
+    right: 13px;
+    top: 15px;
+    height: 18px;
+    line-height: 14px;
+    vertical-align: middle;
+    border-radius: 10px;
+    padding: 2px 6px;
+}
+
+
+.omc_main .omc_main_tab{
+    margin-left: 200px;
+    padding: 20px 10px 20px 10px;
+
+}
+.omc_main .omc_city_tu {
+    border: 1px solid #e5e5e5;
+    background: #fff;
+    border-radius: 4px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+
+}
+
+.omc_main .omc_main_tab .half_page{
+   width: 50%;
+}
+.omc_main .omc_main_tab .form-horizontal{
+    background: #fff;
+    padding: 25px 9px 15px 9px;
+    border-radius: 2px;
+    border: 1px solid #ebebea;
+    margin-right:10px;
+}
+.omc_main .omc_main_tab .form-horizontal .controls {
+    position: relative;
+}
+.omc_main .omc_main_tab .form-horizontal .controls .input-position{
+    line-height: 28px;
+}
+.omc_table_box{
+    background-color: #fff;
+    padding: 15px 9px;
+    border: 1px solid #ebebea;
+    margin: 10px 10px 10px 0;
+}
+/* 运维工具*/
+.omc_tool_open{ padding: 20px;}
+.omc_tool_open textarea{width: 100%;}
+.openloading{ margin-top: 100px; text-align:center; font-size: 18px;}
+.loadingresult{ height: 75px; font-size: 22px;  text-align: center; line-height: 60px; vertical-align: middle;display: table;  margin: 0 auto;margin-top: 40px;}
+.loadingresult i{ font-size: 70px;vertical-align: top;}
+.loadingresult_title{ max-width: 400px;line-height: 30px; text-align: center;  padding-top: 15px; word-break: break-all; }
+/*字体闪烁*/
+
+@keyframes blink{
+    0%{opacity: 1;}
+    50%{opacity: 1;}
+    50.01%{opacity: 0;} /* 注意这里定义50.01%立刻透明度为０，可以设置闪烁效果 */
+    100%{opacity: 0;}
+}
+
+/* 添加兼容性前缀 */
+
+@-webkit-keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 1; }
+    50.01% { opacity: 0; }
+    100% { opacity: 0; }
+}
+
+@-moz-keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 1; }
+    50.01% { opacity: 0; }
+    100% { opacity: 0; }
+}
+
+@-ms-keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 1; }
+    50.01% { opacity: 0; }
+    100% { opacity: 0; }
+}
+
+@-o-keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 1; }
+    50.01% { opacity: 0; }
+    100% { opacity: 0; }
+}
+
+/* 定义blink类*/
+.omc_blink{
+    animation: blink .75s linear infinite;
+    /* 其它浏览器兼容性前缀 */
+    -webkit-animation: blink .75s linear infinite;
+    -moz-animation: blink .75s linear infinite;
+    -ms-animation: blink .75s linear infinite;
+    -o-animation: blink .75s linear infinite;
+}
+/* fadescale*/
+
+@-webkit-keyframes fadescale{
+    0%{opacity:0;
+        -webkit-transform:scale(0,0);
+        -moz-transform:scale(0,0);
+        -ms-transform:scale(0,0);
+        -o-transform:scale(0,0);
+        transform:scale(0,0);}
+    100%{opacity:1;
+        -webkit-transform:scale(1,1);
+        -moz-transform:scale(1,1);
+        -ms-transform:scale(1,1);
+        -o-transform:scale(1,1);
+        transform:scale(1,1);}
+}
+.fadescale01 {
+    -webkit-animation: fadescale 1s 0.5s ease both;
+    -moz-animation: fadescale 1s 0.5s ease both;
+    -ms-animation: fadescale 1s 0.5s ease both;
+    animation: fadescale 1s 0.5s ease both;
+}
+.fadescale02 {
+    -webkit-animation: fadescale 1s 0.6s ease both;
+    -moz-animation: fadescale 1s 0.6s ease both;
+    -ms-animation: fadescale 1s 0.6s ease both;
+    animation: fadescale 1s 0.6s ease both;
+}
+
+.fadescale03 {
+    -webkit-animation: fadescale 1s 0.7s ease both;
+    -moz-animation: fadescale 1s 0.7s ease both;
+    -ms-animation: fadescale 1s 0.6s ease both;
+    animation: fadescale 1s 0.6s ease both;
+}
+
+.fadescale04 {
+    -webkit-animation: fadescale 1s 0.8s ease both;
+    -moz-animation: fadescale 1s 0.8s ease both;
+    -ms-animation: fadescale 1s 0.8s ease both;
+    animation: fadescale 1s 0.8s ease both;
+}
+
+.fadescale05 {
+    -webkit-animation: fadescale 1s 0.9s ease both;
+    -moz-animation: fadescale 1s 0.9s ease both;
+    -ms-animation: fadescale 1s 0.9s ease both;
+    animation: fadescale 1s 0.9s ease both;
+}
+
+.fadescale06 {
+    -webkit-animation: fadescale 1s 1s ease both;
+    -moz-animation: fadescale 1s 1s ease both;
+    -ms-animation: fadescale 1s 1s ease both;
+    animation: fadescale 1s 1s ease both;
+}
+.fadescale07 {
+    -webkit-animation: fadescale 1s 1.1s ease both;
+    -moz-animation: fadescale 1s 1.1s ease both;
+    -ms-animation: fadescale 1s 1.1s ease both;
+    animation: fadescale 1s 1.1s ease both;
+}
+.fadescale08 {
+    -webkit-animation: fadescale 1s 1.2s ease both;
+    -moz-animation: fadescale 1s 1.2s ease both;
+    -ms-animation: fadescale 1s 1.2s ease both;
+    animation: fadescale 1s 1.2s ease both;
+}
+.fadescale09{
+    -webkit-animation: fadescale 1s 1.3s ease both;
+    -moz-animation: fadescale 1s 1.3s ease both;
+    -ms-animation: fadescale 1s 1.3s ease both;
+    animation: fadescale 1s 1.3s ease both;
+}
+.fadescale10 {
+    -webkit-animation: fadescale 1s 1.4s ease both;
+    -moz-animation: fadescale 1s 1.4s ease both;
+    -ms-animation: fadescale 1s 1.4s ease both;
+    animation: fadescale 1s 1.4s ease both;
+}
+.fadescale11 {
+    -webkit-animation: fadescale 1s 1.5s ease both;
+    -moz-animation: fadescale 1s 1.5s ease both;
+    -ms-animation: fadescale 1s 1.5s ease both;
+    animation: fadescale 1s 1.5s ease both;
+}
+.fadescale12 {
+    -webkit-animation: fadescale 1s 1.6s ease both;
+    -moz-animation: fadescale 1s 1.6s ease both;
+    -ms-animation: fadescale 1s 1.6s ease both;
+    animation: fadescale 1s 1.6s ease both;
+}
+.fadescale13 {
+    -webkit-animation: fadescale 1s 1.7s ease both;
+    -moz-animation: fadescale 1s 1.7s ease both;
+    -ms-animation: fadescale 1s 1.7s ease both;
+    animation: fadescale 1s 1.7s ease both;
+}
+.fadescale14{
+    -webkit-animation: fadescale 1s 1.8s ease both;
+    -moz-animation: fadescale 1s 1.8s ease both;
+    -ms-animation: fadescale 1s 1.8s ease both;
+    animation: fadescale 1s 1.8s ease both;
+}
+.omc_checkboxdiv_admin{width:760px;max-height:60px;height:auto;overflow-x:hidden;overflow-y:auto}
+.omc_checkboxdiv_role{max-height: 60px;height:60px;overflow-x:hidden;overflow-y:auto}
+
+/*!
+ laypage默认样式
+*/.laypage_main a,.laypage_main input,.laypage_main span{height:26px;line-height:26px}
+.laypage_main button,.laypage_main input,.laypageskin_default a{border: 1px solid #ccc;background-color:#fff}
+.laypage_main{font-size:0;clear:both;color:#666}
+.laypage_main *{display:inline-block;vertical-align:top;font-size:12px}
+.laypage_main a{text-decoration:none;color:#666}
+.laypage_main a,.laypage_main span{margin:0 3px 6px;padding:0 10px}
+.laypage_main input{width:40px;margin:0 5px;padding:0 5px}
+.laypage_main button{height:28px;line-height:28px;margin-left:5px;padding:0 10px;color:#666}
+.laypageskin_default span{height:28px;line-height:28px;color:#999}
+.laypageskin_default .laypage_curr{ background:#6ab0f4;color:#fff;}
+.laypageskin_molv a,.laypageskin_molv span{padding:0 12px;border-radius:2px}
+.laypageskin_molv a{background-color:#f1eff0}
+.laypageskin_molv .laypage_curr{background-color:#00AA91;color:#fff}
+.laypageskin_molv input{height:24px;line-height:24px}
+.laypageskin_molv button{height:26px;line-height:26px}
+.laypageskin_yahei{color:#333}
+.laypageskin_yahei a,.laypageskin_yahei span{padding:0 13px;border-radius:2px;color:#333}
+.laypageskin_yahei .laypage_curr{background-color:#333;color:#fff}
+.laypageskin_flow{text-align:center}
+.laypageskin_flow .page_nomore{color:#999}
+/*重写layer-msg样式*/
+.layui-layer-msg .layui-layer-content{position:relative;padding:15px;line-height:20px;word-break:break-all;overflow:hidden;font-size:20px;font-family:Microsoft Yahei, Arial, Helvetica, sans-serif; overflow-x:hidden;overflow-y:auto}
+.layer_msg_color_success{background-color: rgb(0,180,0);color:#fff;text-align: center;}
+.layer_msg_color_error{background-color: rgb(230,0,0);color:#fff;text-align: center;}
+/*切换tab*/
+.tag_box{ border-top-left-radius: 4px; border-bottom-left-radius:4px; }
+.tag_box .tags{ color: #666; padding:5px 20px;border: 1px solid #6ab0f4; border-left: none;  background: #fff; text-align:center;display: block; float: left; text-decoration: none;}
+.tag_box .tags:hover{ background: #6ab0f4; color: #fff; }
+.tag_box .tags.border-left{ border-top-left-radius: 4px; border-bottom-left-radius: 4px; border: 1px solid #6ab0f4;}
+.tag_box .tags.border-right{ border-top-right-radius:3px; border-bottom-right-radius:3px;  }
+.tag_box .tag_on{ background: #6ab0f4; color: #fff; }
